@@ -41,23 +41,23 @@ public:
         cout << "*******************************************************" << endl;
     }
 
-    void printstat(){
+    void printstat() {
         cout << "Name: " << name << endl;
         cout << "Health: " << health << endl;
         cout << "Attack: " << attack << endl;
     }
 
-    string getname(){return this -> name;}
+    string getname() {return this -> name;}
     void setatt(int x) {this -> attack = x; }
-    int getspell_1(){ return this -> spell_1;}
+    int getspell_1() { return this -> spell_1;}
     int getspell_2() { return this -> spell_2;}
     int getattack() { return this -> attack;}
     void boostatt() {this->attack++;}
     void debuff() {this->attack--;}
     int gethealth() {return this->health;}
     void sethealth(int value) {this->health = value;}
-    void win(){this->totalwins++;}
-    void lose(){this->totalloses++;}
+    void win() {this->totalwins++;}
+    void lose() {this->totalloses++;}
 
     virtual ~character() {
     //cout << "Character " << name << " is being destructed." << endl;
@@ -65,15 +65,15 @@ public:
 
 };
 
-class decisiontree{
+class decisiontree {
 public:
     void eventhandler(character* ptr){
         int currhealth = ptr->gethealth();
-        if (currhealth < 50){
+        if (currhealth < 50) {
             cout << "Current HP is under 50, Character will now regain 2 HP per round! " << endl;
             ptr->sethealth(currhealth + 2);
         }
-        if(currhealth < 20){
+        if(currhealth < 20) {
             cout << "Current HP is under 20, Character will now also get +2 ATK per round! " << endl;
             ptr->setatt(ptr->getattack() + 2);
         }
@@ -101,11 +101,11 @@ public:
 
 class player: public character {
 public:
-    void setname(string input){this -> name = input;}
-    void setskill_1(int input){this -> spell_1 = input; }
-    void setskill_2(int input){this -> spell_2 = input; }
-    void setloadout(int value1, int value2){this -> health = value1; this -> attack = value2; }
-    void makechar(){
+    void setname(string input) {this -> name = input;}
+    void setskill_1(int input) {this -> spell_1 = input; }
+    void setskill_2(int input) {this -> spell_2 = input; }
+    void setloadout(int value1, int value2) {this -> health = value1; this -> attack = value2; }
+    void makechar() {
         string s;
         int input;
         cout << "Give your character a name!" << endl;
@@ -113,7 +113,7 @@ public:
         setname(s);
         cout << "Which Skill_1 would you like to have?" << endl << "1 = criting, 2 = boosting" << endl;
         cin >> input;
-        if (input == 1){
+        if (input == 1) {
             setskill_1(1);
         }
         if (input == 2) {
@@ -121,7 +121,7 @@ public:
         }
         cout << "Which Skill_2 would you like to have?" << endl << "1 =healing, 2 = debuffing" << endl;
         cin >> input;
-        if (input == 1){
+        if (input == 1) {
             setskill_2(1);
         }
         if (input == 2) {
@@ -129,10 +129,10 @@ public:
         }
         cout << "Choose a more offensive or defensive loadout" << endl << "1 = 80 HP -- 12 ATK; 2 = 100 HP -- 10 ATK" << endl;
         cin >> input;
-        if (input == 1){
+        if (input == 1) {
             setloadout(80, 12);
         }
-        if (input == 2){
+        if (input == 2) {
             setloadout(100, 10);
         }
     }
@@ -161,12 +161,12 @@ class game {
 
 };
 
-void attack(character* ptr, character* enemyptr){
+void attack(character* ptr, character* enemyptr) {
     int dmg = ptr->getattack();
     enemyptr->sethealth( enemyptr->gethealth() - dmg);
 }
 
-void crit(character* ptr, character* enemyptr){   // not permanent only valid for one round
+void crit(character* ptr, character* enemyptr) {   // not permanent only valid for one round
     int actual_attack = ptr->getattack();
     int dmg = actual_attack * 2;
     ptr->setatt(dmg);
@@ -175,24 +175,24 @@ void crit(character* ptr, character* enemyptr){   // not permanent only valid fo
     cout << "Character crit the enemy for 200% of its normal ATK (not permanent)" << endl;
 }
 
-void boost_(character* ptr, character* enemyptr){ // permanent valid forever
+void boost_(character* ptr, character* enemyptr) { // permanent valid forever
     ptr->boostatt();
     attack(ptr, enemyptr);
     cout << "Characters ATK permanently increased by one and attack Enemy" << endl;
 }
 
-void debuff(character* ptr){ // permanent valid forever
+void debuff(character* ptr) { // permanent valid forever
     ptr->debuff();
     cout << "Enemy Characters Attack has been permanently decreased by 1" << endl;
 }
 
-void healing_(character* ptr){  // not permanent only valid for one round
+void healing_(character* ptr) {  // not permanent only valid for one round
     int currhealth = ptr->gethealth();
     ptr->sethealth(currhealth + 5);
     cout << "Characters HP: +5" << endl;
 }
 
-bool checkgamestatus(game* newgame){
+bool checkgamestatus(game* newgame) {
     int h1 = newgame->char1->gethealth();
     int h2 = newgame->char2->gethealth();
     if (h1 <= 0){
@@ -201,7 +201,7 @@ bool checkgamestatus(game* newgame){
         newgame->char2->win();
        return false;
     }
-    else if (h2 <= 0){
+    else if (h2 <= 0) {
         cout << "Character 2 has lost!" << endl;
         newgame->char2->lose();
         newgame->char1->win();
@@ -214,7 +214,7 @@ int return_num(int x) {
     return rand () % x;
 }
 
-void playgame(game* newgame){
+void playgame(game* newgame) {
     decisiontree dt;
     //cout << "in here 1" << endl;
     string name1 = newgame->char1->getname();
@@ -236,7 +236,7 @@ void playgame(game* newgame){
         else if(input == 2)
             (char1_s2 == healing) ? healing_(newgame->char1) : debuff(newgame->char2);
 
-        if(checkgamestatus(newgame)!= true){
+        if(checkgamestatus(newgame)!= true) {
             newgame->status = false;
             break;
         }
@@ -244,11 +244,11 @@ void playgame(game* newgame){
         newgame->char1->printstat();
         cout << "----------------------------------------------------------------------------------------------"<< endl;
 
-        if(newgame->bot == true){
+        if(newgame->bot == true) {
             cout << "the computer will play for you" << endl;
             input = return_num(2) +1;
         }
-        else{
+        else {
           cout << "Which Skill do you want to use; Character: " << name2 << endl;
             cout << "Your character has " << "Spell_1(1): " << ((char2_s1 == criting) ? "criting" : "boosting") << " -- "
             << "Spell_2(2): " << ((char2_s2 == healing) ? "healing" : "debuffing") << endl;
@@ -259,7 +259,7 @@ void playgame(game* newgame){
         else if(input == 2)
             (char2_s2 == healing) ? healing_(newgame->char2) : debuff(newgame->char1);
 
-        if(checkgamestatus(newgame)!= true){
+        if(checkgamestatus(newgame)!= true) {
             newgame->status = false;
             break;
         }
@@ -274,14 +274,14 @@ void playgame(game* newgame){
     newgame->char2->print();
 }
 
-void make_char(vector <player> &vect, int &cnt){
+void make_char(vector <player> &vect, int &cnt) {
     player* newplayer = new player;
     vect.push_back(*newplayer);
     vect[cnt].print();
     cnt++;
 }
 
-void show_char(vector <player> vect){
+void show_char(vector <player> vect) {
     cout << "You have made follwing characters, you can choose them as template: " << endl;
             vector<player>::iterator iter = vect.begin();
             for (; iter != vect.end(); iter++){
@@ -289,9 +289,9 @@ void show_char(vector <player> vect){
             }
 }
 
-character* createteam(suzy* suzy_ptr, claude* claude_ptr, vector <player> vect, int &count){
+character* createteam(suzy* suzy_ptr, claude* claude_ptr, vector <player> vect, int &count) {
     int input;
-    while(1){
+    while(1) {
     cout << "Choose a character for the team, please be careful to only input something valid -- 1 = suzy; 2 = claude 3 = character made by you" << endl;
     cin >> input;
     if(input == 1 && count != 1) {
@@ -304,7 +304,7 @@ character* createteam(suzy* suzy_ptr, claude* claude_ptr, vector <player> vect, 
         return claude_ptr;
         break;
     }
-    else if(input == 3){
+    else if(input == 3) {
         show_char(vect);
         cout << "Choose a Character u have made, input their index number to chose them" << endl;
         cin >> input;
@@ -312,7 +312,7 @@ character* createteam(suzy* suzy_ptr, claude* claude_ptr, vector <player> vect, 
         return character::copymyself(vect[input]);
         break; //not needed
     }
-    else{
+    else {
        cout << "Dont choose a suzy or claude again/ Enter smt valid!" << endl;
         continue;
     }
@@ -334,7 +334,7 @@ void reset (character* ptr, int health, int atk){
     ptr->setatt(atk);
 }
 
-void activate_bot (game* ptr){
+void activate_bot (game* ptr) {
     string input;
     while(1){
     cout << "Do you want to play against the computer? enter: y(yes), n(no)" << endl;
@@ -343,7 +343,7 @@ void activate_bot (game* ptr){
         cout << "enter smt valid" << endl;
         continue;
     }
-    else if (input[0] == 'y'){
+    else if (input[0] == 'y') {
        ptr->bot = true;
         break;
     }
@@ -367,11 +367,11 @@ int main() {
     do{
         cout << "To play a game press enter (p) to quit enter (x) to make a character enter (m) to show all playermade characters enter(s)" << endl;
         cin >> input;
-        if(input[0] != 'p' && input[0] != 'x' && input[0] != 's' && input[0] != 'm'){
+        if(input[0] != 'p' && input[0] != 'x' && input[0] != 's' && input[0] != 'm') {
             cout << "please input a valid character" << endl;
             continue;
         }
-        else if(input[0] == 'p'){
+        else if(input[0] == 'p') {
             reset(suzy_ptr, 80, 12);
             reset(claude_ptr, 100, 10);
             menu(suzy_ptr, claude_ptr, game_ptr, player_vector);
@@ -382,13 +382,13 @@ int main() {
             playgame(game_ptr);
             game_ptr->status = true;
         }
-        else if (input[0] == 'm'){
+        else if (input[0] == 'm') {
             make_char(player_vector, player_cnt);
         }
-        else if (input[0] == 's'){
+        else if (input[0] == 's') {
             show_char(player_vector);
         }
-        else if (input[0] == 'x'){
+        else if (input[0] == 'x') {
            game_ptr->status = false;
             break;
         }
